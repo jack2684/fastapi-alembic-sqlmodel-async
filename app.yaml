@@ -1,0 +1,105 @@
+id: /subscriptions/d71f6c1b-d841-4284-a9d9-0a425fe3e358/resourceGroups/alpinely/providers/Microsoft.App/containerapps/counta
+identity:
+  type: None
+location: West US 2
+name: counta
+properties:
+  configuration:
+    activeRevisionsMode: Single
+    dapr: null
+    ingress:
+      additionalPortMappings: null
+      allowInsecure: false
+      clientCertificateMode: null
+      corsPolicy: null
+      customDomains: null
+      exposedPort: 0
+      external: true
+      fqdn: counta.proudsky-0dc6421d.westus2.azurecontainerapps.io
+      ipSecurityRestrictions: null
+      stickySessions: null
+      targetPort: 80
+      traffic:
+      - latestRevision: true
+        weight: 100
+      transport: Auto
+    maxInactiveRevisions: null
+    registries:
+    - identity: ''
+      passwordSecretRef: reg-pswd-42de8b05-bb2a
+      server: alpinely.azurecr.io
+      username: alpinely
+    secrets:
+    - name: reg-pswd-42de8b05-bb2a
+    service: null
+  customDomainVerificationId: 6911DF0DA2EE79E23485988725B67A181C976178207162051DBE8A04D4378982
+  environmentId: /subscriptions/d71f6c1b-d841-4284-a9d9-0a425fe3e358/resourceGroups/alpinely/providers/Microsoft.App/managedEnvironments/managedEnvironment-alpinely-846d
+  eventStreamEndpoint: https://westus2.azurecontainerapps.dev/subscriptions/d71f6c1b-d841-4284-a9d9-0a425fe3e358/resourceGroups/alpinely/containerApps/counta/eventstream
+  latestReadyRevisionName: counta--6lj76r1
+  latestRevisionFqdn: counta--exzu97s.proudsky-0dc6421d.westus2.azurecontainerapps.io
+  latestRevisionName: counta--exzu97s
+  managedEnvironmentId: /subscriptions/d71f6c1b-d841-4284-a9d9-0a425fe3e358/resourceGroups/alpinely/providers/Microsoft.App/managedEnvironments/managedEnvironment-alpinely-846d
+  outboundIpAddresses:
+  - 20.99.170.216
+  - 20.99.171.18
+  - 20.99.170.250
+  - 20.99.170.223
+  - 20.99.170.208
+  - 20.99.170.164
+  - 20.99.170.240
+  - 20.99.170.49
+  - 20.99.171.11
+  - 20.99.170.181
+  - 20.69.82.220
+  - 20.69.83.13
+  - 20.69.83.5
+  - 20.69.83.46
+  - 20.115.200.188
+  - 20.115.201.160
+  - 20.115.201.51
+  - 20.115.201.152
+  - 20.115.201.28
+  - 20.115.201.167
+  - 20.115.194.124
+  - 20.115.194.128
+  - 20.115.194.137
+  - 20.115.194.126
+  - 20.29.134.80
+  - 20.29.134.79
+  - 20.29.134.41
+  - 20.29.134.75
+  - 20.29.132.146
+  - 20.29.134.12
+  provisioningState: Succeeded
+  runningStatus: Running
+  template:
+    containers:
+    - command:
+      - sh -c 'alembic upgrade head && uvicorn app.main:app --reload --workers 3 --host
+        0.0.0.0 --port 8000'
+      image: alpinely.azurecr.io/counta:latest
+      name: counta
+      probes: []
+      resources:
+        cpu: 0.25
+        ephemeralStorage: 1Gi
+        memory: 0.5Gi
+    initContainers: null
+    revisionSuffix: ''
+    scale:
+      maxReplicas: 10
+      minReplicas: 0
+      rules: null
+    serviceBinds: null
+    terminationGracePeriodSeconds: null
+    volumes: []
+  workloadProfileName: Consumption
+resourceGroup: alpinely
+systemData:
+  createdAt: '2024-02-11T12:06:05.7859948'
+  createdBy: gjj2684@gmail.com
+  createdByType: User
+  lastModifiedAt: '2024-02-16T11:30:28.4928438'
+  lastModifiedBy: gjj2684@gmail.com
+  lastModifiedByType: User
+type: Microsoft.App/containerApps
