@@ -113,11 +113,12 @@ app = FastAPI(
 )
 
 
+print(f"Connecting to database: {settings.ASYNC_DATABASE_URI}")
 app.add_middleware(
     SQLAlchemyMiddleware,
     db_url=str(settings.ASYNC_DATABASE_URI),
     engine_args={
-        "echo": False,
+        "echo": True,
         # "pool_pre_ping": True,
         # "pool_size": settings.POOL_SIZE,
         # "max_overflow": 64,
