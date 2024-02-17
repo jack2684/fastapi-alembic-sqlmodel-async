@@ -147,7 +147,13 @@ pytest:
 	docker compose -f docker-compose-test.yml exec fastapi_server pytest
 
 AZ_ENV_FILE=.env.az
-az.containerapp.up:
+az-containerapp-up.from-local:
 	@echo "using env file: $(AZ_ENV_FILE)"
 	$(eval ENV_VARS=$(shell awk 'BEGIN {FS="="} /^[^#]/ {print " "$$1"="$$2}' $(AZ_ENV_FILE))) 
-	az containerapp up -n counta --source backend/ --env-vars $(ENV_VARS)
+	az containerapp up -n counta --source backend/ --ingress external --target-port 80 --env-vars $(ENV_VARS)
+
+AZ_ENV_FILE=.env.az
+az-containerapp-up:
+	@echo "using env file: $(AZ_ENV_FILE)"
+	$(eval ENV_VARS=$(shell awk 'BEGIN {FS="="} /^[^#]/ {print " "$$1"="$$2}' $(AZ_ENV_FILE))) 
+	az containerapp up -n counta --image alpinely.azurecr.io/counta --ingress external --target-port 80 --env-vars $(ENV_VARS)

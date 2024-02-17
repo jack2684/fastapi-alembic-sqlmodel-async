@@ -17,11 +17,10 @@ RUN bash -c "if [ $INSTALL_DEV == 'true' ] ; then poetry install --no-root ; els
 
 # Put the original code in the image for cloud deploy
 # For local development, we will mount the code as a volume
-# volumes: [./backend/app:/code]g
+# volumes: [./backend/app:/code]
 COPY app /code 
 
 ENV PYTHONPATH=/code
-CMD ['sh', '-c', \
-    'alembic upgrade head && python app/initial_data.py && gunicorn -w 3 -k uvicorn.workers.UvicornWorker app.main:app  --bind 0.0.0.0:8000 --preload --log-level=debug --timeout 120' \
-]
+ENTRYPOINT ["bash", "-c", "./start.sh"]
+# CMD 'echo "jackjack start" && alembic upgrade head && python app/initial_data.py && gunicorn -w 3 -k uvicorn.workers.UvicornWorker app.main:app  --bind 0.0.0.0:8000 --preload --log-level=debug --timeout 120'
 EXPOSE 8000
