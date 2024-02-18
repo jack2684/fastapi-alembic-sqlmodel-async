@@ -13,7 +13,7 @@ COPY app/pyproject.toml app/poetry.lock* /code/
 
 # Allow installing dev dependencies to run tests
 ARG INSTALL_DEV=false
-RUN bash -c "if [ $INSTALL_DEV == 'true' ] ; then poetry install --no-root ; else poetry install --no-root --no-dev ; fi"
+RUN bash -c "if [ $INSTALL_DEV == 'true' ] ; then poetry install --no-root ; else poetry install --no-root --only main ; fi"
 
 # Put the original code in the image for cloud deploy
 # For local development, we will mount the code as a volume
