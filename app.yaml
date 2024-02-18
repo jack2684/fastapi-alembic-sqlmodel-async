@@ -10,15 +10,19 @@ properties:
     ingress:
       additionalPortMappings: null
       allowInsecure: false
-      clientCertificateMode: null
+      clientCertificateMode: Ignore
       corsPolicy: null
-      customDomains: null
+      customDomains:
+      - bindingType: SniEnabled
+        certificateId: /subscriptions/d71f6c1b-d841-4284-a9d9-0a425fe3e358/resourceGroups/alpinely/providers/Microsoft.App/managedEnvironments/managedEnvironment-alpinely-846d/managedCertificates/api.counta.alpinely.ai-managede-240218110657
+        name: api.counta.alpinely.ai
       exposedPort: 0
       external: true
       fqdn: counta.proudsky-0dc6421d.westus2.azurecontainerapps.io
       ipSecurityRestrictions: null
-      stickySessions: null
-      targetPort: 80
+      stickySessions:
+        affinity: none
+      targetPort: 8000
       traffic:
       - latestRevision: true
         weight: 100
@@ -26,18 +30,18 @@ properties:
     maxInactiveRevisions: null
     registries:
     - identity: ''
-      passwordSecretRef: reg-pswd-42de8b05-bb2a
-      server: alpinely.azurecr.io
-      username: alpinely
+      passwordSecretRef: cac5f5b3589eacrazurecrio-cac5f5b3589eacr
+      server: cac5f5b3589eacr.azurecr.io
+      username: cac5f5b3589eacr
     secrets:
-    - name: reg-pswd-42de8b05-bb2a
+    - name: cac5f5b3589eacrazurecrio-cac5f5b3589eacr
     service: null
   customDomainVerificationId: 6911DF0DA2EE79E23485988725B67A181C976178207162051DBE8A04D4378982
   environmentId: /subscriptions/d71f6c1b-d841-4284-a9d9-0a425fe3e358/resourceGroups/alpinely/providers/Microsoft.App/managedEnvironments/managedEnvironment-alpinely-846d
   eventStreamEndpoint: https://westus2.azurecontainerapps.dev/subscriptions/d71f6c1b-d841-4284-a9d9-0a425fe3e358/resourceGroups/alpinely/containerApps/counta/eventstream
-  latestReadyRevisionName: counta--6lj76r1
-  latestRevisionFqdn: counta--exzu97s.proudsky-0dc6421d.westus2.azurecontainerapps.io
-  latestRevisionName: counta--exzu97s
+  latestReadyRevisionName: counta--eeq0apj
+  latestRevisionFqdn: counta--eeq0apj.proudsky-0dc6421d.westus2.azurecontainerapps.io
+  latestRevisionName: counta--eeq0apj
   managedEnvironmentId: /subscriptions/d71f6c1b-d841-4284-a9d9-0a425fe3e358/resourceGroups/alpinely/providers/Microsoft.App/managedEnvironments/managedEnvironment-alpinely-846d
   outboundIpAddresses:
   - 20.99.170.216
@@ -74,21 +78,67 @@ properties:
   runningStatus: Running
   template:
     containers:
-    - command:
-      - sh -c 'alembic upgrade head && uvicorn app.main:app --reload --workers 3 --host
-        0.0.0.0 --port 8000'
-      image: alpinely.azurecr.io/counta:latest
+    - env:
+      - name: PROJECT_NAME
+        value: fastapi-sqlmodel-alembic
+      - name: FIRST_SUPERUSER_PASSWORD
+        value: admin
+      - name: FIRST_SUPERUSER_EMAIL
+        value: admin@admin.com
+      - name: ENCRYPT_KEY
+        value: TshgGacKPYrm35m89UqbRg46JAbUm2yRtxOCQFdqa3w=
+      - name: SECRET_KEY
+        value: 09d25e0sas4faa6c52gf6c818166b7a9563b93f7sdsdef6f0f4caa6cf63b88e8d3e7
+      - name: BACKEND_CORS_ORIGINS
+        value: '["*"]'
+      - name: DATABASE_HOST
+        value: alpinely20240217.postgres.database.azure.com
+      - name: DATABASE_USER
+        value: alpinely
+      - name: DATABASE_PASSWORD
+        value: AJsf9ahsdhfa1_nas
+      - name: DATABASE_NAME
+        value: counta
+      - name: DATABASE_CELERY_NAME
+        value: celery_schedule_jobs
+      - name: DATABASE_PORT
+        value: '5432'
+      - name: EXT_ENDPOINT1
+        value: 127.0.0.1
+      - name: LOCAL_1
+        value: localhost
+      - name: LOCAL_2
+        value: 127.0.0.1
+      - name: REDIS_HOST
+        value: alpinely.redis.cache.windows.net
+      - name: REDIS_PORT
+        value: '6380'
+      - name: REDIS_PASS
+        value: jTplhZ0Pd7xaMH868UVgbrU35GhPh70VXAzCaOYrTqU=
+      - name: MINIO_URL
+        value: storage.localhost
+      - name: MINIO_BUCKET
+        value: fastapi-minio
+      - name: MINIO_ROOT_USER
+        value: minioadmin
+      - name: MINIO_ROOT_PASSWORD
+        value: minioadmin
+      - name: WHEATER_URL
+        value: https://wttr.in
+      - name: OPENAI_API_KEY
+        value: ''
+      image: cac5f5b3589eacr.azurecr.io/counta:cli-containerapp-20240218023855264726
       name: counta
       probes: []
       resources:
-        cpu: 0.25
-        ephemeralStorage: 1Gi
-        memory: 0.5Gi
+        cpu: 1
+        ephemeralStorage: 4Gi
+        memory: 2Gi
     initContainers: null
     revisionSuffix: ''
     scale:
       maxReplicas: 10
-      minReplicas: 0
+      minReplicas: 1
       rules: null
     serviceBinds: null
     terminationGracePeriodSeconds: null
@@ -96,10 +146,10 @@ properties:
   workloadProfileName: Consumption
 resourceGroup: alpinely
 systemData:
-  createdAt: '2024-02-11T12:06:05.7859948'
+  createdAt: '2024-02-16T20:09:17.8645431'
   createdBy: gjj2684@gmail.com
   createdByType: User
-  lastModifiedAt: '2024-02-16T11:30:28.4928438'
+  lastModifiedAt: '2024-02-18T11:35:15.8895862'
   lastModifiedBy: gjj2684@gmail.com
   lastModifiedByType: User
 type: Microsoft.App/containerApps
