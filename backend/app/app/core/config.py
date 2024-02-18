@@ -29,6 +29,7 @@ class Settings(BaseSettings):
     DATABASE_CELERY_NAME: str = "celery_schedule_jobs"
     REDIS_HOST: str
     REDIS_PORT: str
+    REDIS_PASS: str
     DB_POOL_SIZE: int = 83
     WEB_CONCURRENCY: int = 9
     POOL_SIZE: int = max(DB_POOL_SIZE // WEB_CONCURRENCY, 5)
@@ -114,7 +115,7 @@ class Settings(BaseSettings):
 
     SECRET_KEY: str = secrets.token_urlsafe(32)
     ENCRYPT_KEY: str = secrets.token_urlsafe(32)
-    BACKEND_CORS_ORIGINS: list[str] | list[AnyHttpUrl]
+    BACKEND_CORS_ORIGINS: list[str] | list[AnyHttpUrl] = ["*"]
 
     @field_validator("BACKEND_CORS_ORIGINS")
     def assemble_cors_origins(cls, v: str | list[str]) -> list[str] | str:

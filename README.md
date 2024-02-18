@@ -391,3 +391,17 @@ PR are welcome ❤️
 [![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://badges.mit-license.org)
 
 - This project is licensed under the terms of the **[MIT license](LICENSE)**
+
+## Counta dev notes
+
+
+### local
+Right now it is meant to be able to run locally as container, while still connecting the dependencies to the cloud. (PGDB, Redis, etc)
+```
+make run-dev-build
+```
+
+### build and deploy to the cloud
+```
+make az-containerapp-up.from-local
+```

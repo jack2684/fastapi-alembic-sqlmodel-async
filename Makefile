@@ -141,7 +141,23 @@ clean-pgadmin:
 	docker volume rm pgadmin_data
 
 run-test:
-	docker compose -f docker-compose-test.yml up --build
+	docker compose -f docker-compose-test.yml up p
 
 pytest:
 	docker compose -f docker-compose-test.yml exec fastapi_server pytest
+
+AZ_ENV_FILE=.env
+az-containerapp-up.from-local:
+	@echo "using env file: $(AZ_ENV_FILE)"
+	$(eval ENV_VARS=$(shell python3 dot_env_to_env_vars.py ${AZ_ENV_FILE})) 
+	az containerapp up -n counta --source backend/ --ingress external --target-port 80 --env-vars $(ENV_VARS)
+
+AZ_ENV_FILE=.env
+az-containerapp-up:
+	@echo "using env file: $(AZ_ENV_FILE)"
+	$(eval ENV_VARS=$(shell python3 dot_env_to_env_vars.py ${AZ_ENV_FILE})) 
+	az containerapp up -n counta --image alpinely.azurecr.io/counta --ingress external --target-port 80 --env-vars $(ENV_VARS)
+
+run.fastapi_server:
+	cd backend/app && \
+	poetry run uvicorn app.main:app --reload

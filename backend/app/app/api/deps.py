@@ -23,8 +23,11 @@ reusable_oauth2 = OAuth2PasswordBearer(
 
 
 async def get_redis_client() -> Redis:
-    redis = await aioredis.from_url(
-        f"redis://{settings.REDIS_HOST}:{settings.REDIS_PORT}",
+    redis = await aioredis.Redis(
+        host=settings.REDIS_HOST,
+        port=settings.REDIS_PORT,
+        password=settings.REDIS_PASS,
+        ssl=True,
         max_connections=10,
         encoding="utf8",
         decode_responses=True,
