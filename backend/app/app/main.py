@@ -113,7 +113,7 @@ app = FastAPI(
 )
 
 
-print(f"Connecting to database: {settings.ASYNC_DATABASE_URI}")
+# print(f"Connecting to database: {settings.ASYNC_DATABASE_URI}")
 app.add_middleware(
     SQLAlchemyMiddleware,
     db_url=str(settings.ASYNC_DATABASE_URI),
